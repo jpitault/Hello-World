@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ne fonctionne que si le bonding n'a pas été activé auparavant
-# Activer un agrégat de lien (LACP) sur 2 cartes réseaux sur centOS
+# Activer un agrégat de lien (LACP) sur 2 cartes réseaux sur centOS et augmenter le MTU
 
 
 # Maintenant on récupère le nom des 2 premières interfaces réseau
@@ -35,11 +35,13 @@ echo 'BOOTPROTO="none"' >> /etc/sysconfig/network-scripts/ifcfg-${var[0]}
 echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-${var[0]}
 echo 'MASTER=bond0' >> /etc/sysconfig/network-scripts/ifcfg-${var[0]}
 echo 'SLAVE=yes' >> /etc/sysconfig/network-scripts/ifcfg-${var[0]}
+echo 'MTU=9142' >> /etc/sysconfig/network-scripts/ifcfg-${var[0]}
 
 echo 'BOOTPROTO="none"' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 echo 'MASTER=bond0' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 echo 'SLAVE=yes' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
+echo 'MTU=9142' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 
 
 # On active le module bonding
