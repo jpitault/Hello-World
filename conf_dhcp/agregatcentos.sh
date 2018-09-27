@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Ne fonctionne que si le bonding n'a pas été activé auparavant
 # Activer un agrégat de lien (LACP) sur 2 cartes réseaux sur centOS
 
 # On active le module bonding
