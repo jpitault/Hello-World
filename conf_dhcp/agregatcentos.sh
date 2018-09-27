@@ -3,21 +3,6 @@
 # Ne fonctionne que si le bonding n'a pas été activé auparavant
 # Activer un agrégat de lien (LACP) sur 2 cartes réseaux sur centOS
 
-# On active le module bonding
-modprobe --first-time bonding
-
-
-# On créer le fichier de configuration de l'interface bond0
-# le mode 4 correspond à 802.3ad
-cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-bond0
-DEVICE=bond0
-NAME=bond0
-TYPE=Bond
-BONDING_MASTER=yes
-ONBOOT=yes
-BOOTPROTO=dhcp
-BONDING_OPTS="mode=4 miimon=100
-EOF
 
 # Maintenant on récupère le nom des 2 premières interfaces réseau
 # On les mets dans var[0] et var[1]
@@ -56,6 +41,22 @@ echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 echo 'MASTER=bond0' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 echo 'SLAVE=yes' >> /etc/sysconfig/network-scripts/ifcfg-${var[1]}
 
+
+# On active le module bonding
+modprobe --first-time bonding
+
+
+# On créer le fichier de configuration de l'interface bond0
+# le mode 4 correspond à 802.3ad
+cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-bond0
+DEVICE=bond0
+NAME=bond0
+TYPE=Bond
+BONDING_MASTER=yes
+ONBOOT=yes
+BOOTPROTO=dhcp
+BONDING_OPTS="mode=4 miimon=100
+EOF
 
 # Maintenant on indique à Network Manager de recharger les fichiers
 nmcli con reload
